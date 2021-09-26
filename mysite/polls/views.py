@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 # from django.http import Http404  #for raising an exception
 
 
-# from .models import Course, Edition, MentorInEdition, Mentor,
+from .models import Course, Edition, MentorInEdition, Mentor, Template, ParticularForm, Question, QuestionType
 
 
 def index(request):

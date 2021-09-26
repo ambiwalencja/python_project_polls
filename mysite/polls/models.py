@@ -11,10 +11,10 @@ class PublicationTracker(models.Model):
     class Meta:
         abstract = True  # to sprawia, że klasa jest używana do dziedziczenia, ale nie tworzy tabeli w db
 
+
 # model_name_id is a default attribute
 class Course(PublicationTracker):
     name = models.CharField(max_length=128, verbose_name="Nazwa kursu")
-
 
     def __str__(self):
         return self.name
@@ -57,20 +57,21 @@ class Template(PublicationTracker):
 
 class ParticularForm(PublicationTracker):
     template = models.ForeignKey('Template', on_delete=models.SET_NULL, null=True)  # po usunięciu template ta wartość się ustawi na None
-    mentor_in_edition = models.ForeignKey('MentorInEdition', on_delete=models.SET_NULL)
+    mentor_in_edition = models.ForeignKey('MentorInEdition', on_delete=models.SET_NULL, null=True)
     sent_at = models.DateTimeField(verbose_name="Data wysłania ankiety")
 
     def __str__(self):
-        return f'Form {self.template} in {self.mentor_in_edition}'  # to samo pytanie co powyżej
+        return f'Form {self.template} in {self.mentor_in_edition}'
 
 
 class QuestionType(PublicationTracker):
-    # name (radio button, checkbox, text field)
+    # type_name = models.CharField(max_length=100, choices=(("radio_button", "Single Choice"),
+    #                                                      ("checkbox", "Multiple Choice"), ("text_field", "Text")))
     pass
 
 
 class Question(PublicationTracker):
-    # question_type -> FK QuestionType
+    # question_type = models.ForeignKey('QuestionType', on_delete=models.SET_NULL, null=True)
     question_text = models.CharField(max_length=500, verbose_name="Tekst pytania")
     answer_text = models.CharField(max_length=500, verbose_name="Tekst odpowiedzi", blank=True, default='')
 
